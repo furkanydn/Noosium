@@ -1,19 +1,11 @@
-using Noosium.Selenium.Utilities;
-
-namespace Noosium.Selenium.Login;
-
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium.Interactions;
+using Noosium.Selenium.Utilities;
 using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Safari;
+
+namespace Noosium.Selenium.Tests.Login;
 
 [Author("Admin, Manager, My")]
 [Category("Login")]
@@ -22,22 +14,15 @@ using NUnit.Framework;
 public class LoginTest
 {
     private IWebDriver _driver;
-
-    public LoginTest(IWebDriver driver, IJavaScriptExecutor javaScriptExecutor, IDictionary<string, object> vars)
-    {
-        _driver = driver;
-        _javaScriptExecutor = javaScriptExecutor;
-        this.Vars = vars;
-    }
-    private IDictionary<string, object> Vars { get; set; }
-    private IJavaScriptExecutor _javaScriptExecutor;
+    private IDictionary<string, object> vars {get; set;}
+    private IJavaScriptExecutor javaScriptExecutor;
     
-    [OneTimeSetUp]
+    [SetUp]
     public void Setup()
     {
-        _driver = new ChromeDriver();
-        _javaScriptExecutor = (IJavaScriptExecutor) _driver;
-        Vars = new Dictionary<string, object>();
+        _driver = new SafariDriver();
+        javaScriptExecutor = (IJavaScriptExecutor) _driver;
+        vars = new Dictionary<string, object>();
     }
 
     [OneTimeTearDown]
@@ -48,7 +33,7 @@ public class LoginTest
 
     [Description("Check results on entering valid Id & Password")]
     [Test, Order(0)]
-    public void CheckAbilityEnteringInvalidIdPassword()
+    public void CheckAbilityEnteringValidIdPassword()
     {
         // 1 | Open | /Account/Login
         _driver.Navigate().GoToUrl(Crid.ReadCrid("BaseUrl"));
@@ -64,7 +49,8 @@ public class LoginTest
         _driver.FindElement(By.Id("password")).SendKeys("Hadate25.");
         // 7 | Click | id=captchaCode | 
         _driver.FindElement(By.Id("captchaCode")).Click();
-        // 8 | ImplicitWait | for=captchaCode 
+        // 8 | ImplicitWait | for=captchaCode
+        // to do Solve Captcha With OCR
         _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
         // 9 | Click | name=button | 
         _driver.FindElement(By.Name("button")).Click();

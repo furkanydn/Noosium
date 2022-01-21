@@ -21,4 +21,11 @@
       <Folder Include="Selenium\Tests" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Selenium\Utilities\crid.json" />
+      <EmbeddedResource Include="Selenium\Utilities\crid.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+    </ItemGroup>
+
 </Project>

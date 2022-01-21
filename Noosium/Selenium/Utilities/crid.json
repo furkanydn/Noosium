@@ -7,7 +7,7 @@
         }
     },
     "Uri": {
-        "BaseUrl": "https://test.motivist.com/",
-        "Admin/Missions/COM": "Admin/Missions/COM"
+        "BaseUrl": "https://test.motivist.com",
+        "Admin/Missions/COM": "/Admin/Missions/COM"
     }
 }
