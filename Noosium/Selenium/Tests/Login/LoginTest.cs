@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Noosium.Selenium.Utilities;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Safari;
+using OpenQA.Selenium.Chrome;
+// ReSharper disable SuggestVarOrType_BuiltInTypes
+// ReSharper disable SuggestVarOrType_SimpleTypes
 
 namespace Noosium.Selenium.Tests.Login;
 
@@ -14,13 +17,20 @@ namespace Noosium.Selenium.Tests.Login;
 public class LoginTest
 {
     private IWebDriver _driver;
+    private static string _chromeDriverPath =AppContext.BaseDirectory+ @"Selenium/Libs";
     private IDictionary<string, object> vars {get; set;}
     private IJavaScriptExecutor javaScriptExecutor;
     
     [SetUp]
     public void Setup()
     {
-        _driver = new SafariDriver();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.AddArgument("start-maximized");
+        chromeOptions.AddArgument("--enable-precise-memory-info");
+        chromeOptions.AddArgument("--disable-popup-blocking");
+        chromeOptions.AddArgument("--disable-default-apps");
+        chromeOptions.AddArgument("test-type=browser");
+        _driver = new ChromeDriver(_chromeDriverPath,chromeOptions);
         javaScriptExecutor = (IJavaScriptExecutor) _driver;
         vars = new Dictionary<string, object>();
     }
@@ -49,10 +59,13 @@ public class LoginTest
         _driver.FindElement(By.Id("password")).SendKeys("Hadate25.");
         // 7 | Click | id=captchaCode | 
         _driver.FindElement(By.Id("captchaCode")).Click();
-        // 8 | ImplicitWait | for=captchaCode
-        // to do Solve Captcha With OCR
-        _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-        // 9 | Click | name=button | 
+        // 8 | Click | id=noosCaptchaImage
+        Image captchaOcrImage = OpticChar.ElementScreenShot(_driver, _driver.FindElement(By.Id("noosCaptchaImage")));
+        string ocrText = OpticChar.PerformOcr(captchaOcrImage);
+        // 9 | Type | id=captchaCode
+        _driver.FindElement(By.Id("captchaCode")).SendKeys(ocrText);
+        // 10 | Click | name=button |
         _driver.FindElement(By.Name("button")).Click();
+        _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(300);
     }
 }
