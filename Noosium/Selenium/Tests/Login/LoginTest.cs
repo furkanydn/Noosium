@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using Noosium.Selenium.Utilities;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -46,7 +47,7 @@ public class LoginTest
     public void CheckAbilityEnteringValidIdPassword()
     {
         // 1 | Open | /Account/Login
-        _driver.Navigate().GoToUrl(Crid.ReadCrid("BaseUrl"));
+        _driver.Navigate().GoToUrl(Crid.ReadCrid("Uri","BaseUrl"));
         // 2 | SetWindowSize | Maximize | 
         _driver.Manage().Window.Maximize();
         // 3 | Click | id=username | 
@@ -60,8 +61,24 @@ public class LoginTest
         // 7 | Click | id=captchaCode | 
         _driver.FindElement(By.Id("captchaCode")).Click();
         // 8 | Click | id=noosCaptchaImage
-        Image captchaOcrImage = OpticChar.ElementScreenShot(_driver, _driver.FindElement(By.Id("noosCaptchaImage")));
-        string ocrText = OpticChar.PerformOcr(captchaOcrImage);
+        string ocrText;
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            Image captchaOcrImage = OpticChar.ElementScreenShotForWindows(_driver, _driver.FindElement(By.Id("noosCaptchaImage"))) ?? 
+                                    throw new InvalidOperationException(Crid.ReadCrid("Exception","OperatingNull"));
+            ocrText = OpticChar.PerformOcrForWindows(captchaOcrImage);
+        }
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        {
+            SixLabors.ImageSharp.Image captchaOcrImageS =
+                OpticChar.ElementScreenShotForOtherOs(_driver, _driver.FindElement(By.Id("noosCaptchaImage"))) ??
+                throw new InvalidOperationException(Crid.ReadCrid("Exception", "OperatingNull"));
+            ocrText = OpticChar.PerformOcrForOtherOs(captchaOcrImageS);
+        }
+        else
+        {
+            throw new InvalidOperationException(Crid.ReadCrid("Exception", "UnSupportedOS"));
+        }
         // 9 | Type | id=captchaCode
         _driver.FindElement(By.Id("captchaCode")).SendKeys(ocrText);
         // 10 | Click | name=button |

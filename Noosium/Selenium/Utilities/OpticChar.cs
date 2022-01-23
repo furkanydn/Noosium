@@ -1,32 +1,69 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.Versioning;
 using IronOcr;
 using OpenQA.Selenium;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats.Bmp;
+using SixLabors.ImageSharp.Formats.Png;
+using SixLabors.ImageSharp.Processing;
+using Image = SixLabors.ImageSharp.Image;
+using Point = SixLabors.ImageSharp.Point;
+using Rectangle = SixLabors.ImageSharp.Rectangle;
+using Size = SixLabors.ImageSharp.Size;
+
+// ReSharper disable SuggestVarOrType_SimpleTypes
 
 namespace Noosium.Selenium.Utilities;
 
-public class OpticChar
+public static class OpticChar
 {
-    public static Bitmap ElementScreenShot(IWebDriver driver, IWebElement webElement)
+    private static readonly string FileNameCaptcha = DateTime.Now.ToString("s") + ".png";
+    [SupportedOSPlatform("windows")]
+    [UnsupportedOSPlatform("MacCatalyst")]
+    public static System.Drawing.Image? ElementScreenShotForWindows(IWebDriver driver, IWebElement webElement)
     {
-        string fileNameCaptcha = DateTime.Now.ToString("s") + ".png";
         Screenshot screenshot = ((ITakesScreenshot) driver).GetScreenshot();
-        if (OperatingSystem.IsWindows())
-        {
-            var image = Image.FromStream(new MemoryStream(screenshot.AsByteArray)) as Bitmap;
-            image.Save(fileNameCaptcha, System.Drawing.Imaging.ImageFormat.Png);
-            return image.Clone(new Rectangle(webElement.Location, webElement.Size), image.PixelFormat);
-        }
-
-        return null;
+        if (System.Drawing.Image.FromStream(new MemoryStream(screenshot.AsByteArray)) is not Bitmap image) return null;
+        image.Save(FileNameCaptcha, System.Drawing.Imaging.ImageFormat.Png);
+        return image.Clone(new System.Drawing.Rectangle(webElement.Location, webElement.Size), image.PixelFormat);
     }
 
-    public static string PerformOcr(Image image)
+    [SupportedOSPlatform("linux")]
+    [SupportedOSPlatform("macOS")]
+    public static Image ElementScreenShotForOtherOs(IWebDriver driver, IWebElement webElement)
+    {
+        Screenshot screenshot = ((ITakesScreenshot) driver).GetScreenshot();
+        using Image imageS = Image.Load(new MemoryStream(screenshot.AsByteArray));
+        imageS.SaveAsPng(FileNameCaptcha,new PngEncoder());
+        imageS.save
+        Rectangle rectangle = Rectangle.Empty;
+        rectangle.X = webElement.Location.X;
+        rectangle.Y = webElement.Location.Y;
+        rectangle.Width = webElement.Size.Width;
+        rectangle.Height = webElement.Size.Height;
+        using Image image = Image.Load(new MemoryStream(screenshot.AsByteArray));
+        using Image copy = image.Clone(x => x.Crop(rectangle));
+        return copy.Save(new MemoryStream(screenshot.AsByteArray),new PngEncoder());
+    }
+    
+    public static string PerformOcrForWindows(System.Drawing.Image image)
     {
         var ocr = new IronTesseract();
         using var input = new OcrInput(image);
         input.Deskew();  // image not straight
+        input.DeNoise();
+        var result = ocr.Read(input);
+        return result.Text;
+    }
+
+    public static string PerformOcrForOtherOs(SixLabors.ImageSharp.Image image)
+    {
+        var ocr = new IronTesseract();
+        using var input = new OcrInput(image);
+        input.Deskew();  // image not straight
+        input.DeNoise();
         var result = ocr.Read(input);
         return result.Text;
     }

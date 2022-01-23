@@ -6,6 +6,10 @@
             "Microsoft": "Information"
         }
     },
+    "Exception": {
+        "UnSupportedOS": "Belirtilen platform veya işletim sistemi için API'nin desteklenmediğini gösterir. Bir sürüm belirtilmişse, API önceki bir sürümden çağrılamaz.",
+        "OperatingNull": "Null yapılabilir türden bir değişkeni, temel alınan türe çevirmeden önce, değerin boş olmadığından emin olmalısınız."
+    },
     "Uri": {
         "BaseUrl": "https://test.motivist.com",
         "Admin/Missions/COM": "/Admin/Missions/COM"
