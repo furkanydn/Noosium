@@ -86,6 +86,7 @@
 /Noosium/obj/Debug/net6.0/Noosium.pdb
 /Noosium/bin/Debug/net6.0/Noosium.runtimeconfig.json
 /Noosium.sln.DotSettings
+/Noosium.sln.DotSettings.user
 /Noosium/bin/Debug/net6.0/NuGet.Frameworks.dll
 /Noosium/bin/Debug/net6.0/nunit.engine.api.dll
 /Noosium/bin/Debug/net6.0/nunit.engine.core.dll
@@ -98,3 +99,5 @@
 /.idea/.idea.Noosium/.idea/vcs.xml
 /Noosium/bin/Debug/net6.0/WebDriver.dll
 /Noosium/bin/Debug/net6.0/WebDriver.Support.dll
+/Noosium/obj/Debug/net6.0/Noosium.assets.cache
+/Noosium/obj/Noosium.csproj.nuget.dgspec.json

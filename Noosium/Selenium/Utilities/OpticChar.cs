@@ -37,7 +37,6 @@ public static class OpticChar
         Screenshot screenshot = ((ITakesScreenshot) driver).GetScreenshot();
         using Image imageS = Image.Load(new MemoryStream(screenshot.AsByteArray));
         imageS.SaveAsPng(FileNameCaptcha,new PngEncoder());
-        imageS.save
         Rectangle rectangle = Rectangle.Empty;
         rectangle.X = webElement.Location.X;
         rectangle.Y = webElement.Location.Y;
@@ -45,7 +44,8 @@ public static class OpticChar
         rectangle.Height = webElement.Size.Height;
         using Image image = Image.Load(new MemoryStream(screenshot.AsByteArray));
         using Image copy = image.Clone(x => x.Crop(rectangle));
-        return copy.Save(new MemoryStream(screenshot.AsByteArray),new PngEncoder());
+        copy.Save(new MemoryStream(screenshot.AsByteArray),new PngEncoder());
+        return null;
     }
     
     public static string PerformOcrForWindows(System.Drawing.Image image)
