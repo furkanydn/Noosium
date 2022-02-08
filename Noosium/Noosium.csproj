@@ -24,6 +24,10 @@
       </EmbeddedResource>
       <None Remove="Selenium\Utilities\crid.json" />
       <None Remove="Selenium\Libs\chromedriver" />
+      <None Remove="appsettings.json" />
+      <EmbeddedResource Include="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </EmbeddedResource>
     </ItemGroup>
 
 </Project>
