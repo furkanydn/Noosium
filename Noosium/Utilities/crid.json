@@ -8,7 +8,10 @@
     },
     "Exception": {
         "UnSupportedOS": "Belirtilen platform veya işletim sistemi için API'nin desteklenmediğini gösterir. Bir sürüm belirtilmişse, API önceki bir sürümden çağrılamaz.",
-        "OperatingNull": "Null yapılabilir türden bir değişkeni, temel alınan türe çevirmeden önce, değerin boş olmadığından emin olmalısınız."
+        "OperatingNull": "Null yapılabilir türden bir değişkeni, temel alınan türe çevirmeden önce, değerin boş olmadığından emin olmalısınız.",
+        "InnerException": "OpenQA.Selenium.WebDriverException: The HTTP request to the remote WebDriver server for URL",
+        "ExceptionInnerMessage": "HTTP request to the remote WebDriver server for URL",
+        "ExpectedExceptionMessage": "Unable to connect to the remote server"
     },
     "Uri": {
         "BaseUrl": "https://test.motivist.com",

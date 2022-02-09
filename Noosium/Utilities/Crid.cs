@@ -48,6 +48,7 @@ public class Crid
     {
         return DeserializeObject(0,"Uri", key);
     }
+    
     /// <summary>
     /// The method parses a string and returns the Context value or object it defines.
     /// </summary>
@@ -66,5 +67,15 @@ public class Crid
     public static string GetAppSettings(string key)
     {
         return DeserializeObject(1, "Setting", key);
+    }
+
+    /// <summary>
+    /// The method parses a string and returns the Exception value or object it defines.
+    /// </summary>
+    /// <param name="key">The JSON PropertyName to deserialize.</param>
+    /// <returns>Returns the string values under the 'Exception' object as title in Crid.</returns>
+    public static string GetExceptionMessage(string key)
+    {
+        return DeserializeObject(0, "Exception", key);
     }
 }
