@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using System.Threading;
 using Noosium.Utilities;
 using NUnit.Framework;
@@ -10,6 +12,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Opera;
 using OpenQA.Selenium.Safari;
 using OpenQA.Selenium.Support.UI;
@@ -393,6 +396,142 @@ public class DriverUtilities
         Driver.FindElement(locator).SendKeys(requiredText);
     }
     
+    #endregion
+
+    #region Action Builder Methods
+
+    /// <summary>
+    /// The user-facing API for emulating complex user gestures. Use this class rather than using the Keyboard or Mouse directly.
+    /// </summary>
+    /// <returns>A self reference.</returns>
+    public static Actions ActionBuilder()
+    {
+        var actionBuilder = new Actions(Driver);
+        return actionBuilder;
+    }
+
+    /// <summary>
+    /// Moves the mouse to the middle of the element. The element is scrolled into view and its location is calculated using getClientRects.
+    /// It's a quick and easy way to do compound actions.
+    /// </summary>
+    /// <param name="webElement">Element to move to..</param>
+    public static void SetFocusOnIWebElement(IWebElement webElement)
+    {
+        ActionBuilder().MoveToElement(webElement).Build().Perform();
+    }
+
+    /// <summary>
+    /// Moves the mouse to an offset from the element's in-view center point.
+    /// </summary>
+    /// <param name="webElement">Element to move to.</param>
+    /// <returns>A self reference.</returns>
+    public static void SetFocusAndClickOnIWebElement(IWebElement webElement)
+    {
+        ActionBuilder().MoveToElement(webElement,0,0).Click().Build().Perform();
+    }
+
+    /// <summary>
+    /// Moves the mouse from its current position (or 0,0) by the given offset. If the coordinates provided are outside the viewport (the mouse will end up outside the browser window) then the viewport is scrolled to match.
+    /// </summary>
+    /// <param name="xCoordinate">Horizontal offset. A negative value means moving the mouse left.</param>
+    /// <param name="yCoordinate">Vertical offset. A negative value means moving the mouse up.</param>
+    /// <returns>A self reference</returns>
+    /// <exception cref="MoveTargetOutOfBoundsException">If the provided offset is outside the document's boundaries.</exception>
+    public static void MoveCursor(int xCoordinate, int yCoordinate)
+    {
+        ActionBuilder().MoveByOffset(xCoordinate,yCoordinate).Perform();
+    }
+
+    #endregion
+
+    #region Wait And Timeout Methods
+
+    /// <summary>
+    /// Specifies the amount of time the driver should wait when searching for an element if it is not immediately present.
+    /// </summary>
+    /// <param name="seconds">A TimeSpan structure defining the amount of time to wait.</param>
+    /// <seealso cref="ITimeouts"/>
+    public static void ImplicitWait(int seconds)
+    {
+        Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
+    }
+
+    /// <summary>
+    /// Wait will ignore instances of NotFoundException that are encountered (thrown) by default in the 'until' condition, and immediately propagate all others. You can add more to the ignore list by calling ignoring(exceptions to add).
+    /// </summary>
+    /// <returns>The timeout in seconds</returns>
+    public static WebDriverWait WebDriverWait()
+    {
+        var webDriverWait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30));
+        return webDriverWait;
+    }
+
+    /// <summary>
+    /// Repeatedly applies this instance's input value to the given function until one of the following occurs:
+    /// the function returns neither null nor false,
+    /// the function throws an exception that is not in the list of ignored exception types,
+    /// the timeout expires.
+    /// </summary>
+    /// <param name="locator">The type of object on which the wait it to be applied.</param>
+    /// <returns>The delegate's expected return type.</returns>
+    public static void WaitForElementVisible(By locator)
+    {
+        var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30));
+        wait.Until(condition => condition.FindElement(locator));
+    }
+
+    #endregion
+
+    #region ScreenShot Methods
+
+    [SupportedOSPlatform("Windows"), SupportedOSPlatform("Linux"), SupportedOSPlatform("MacCatalyst")]
+    [UnsupportedOSPlatform("Android23.0")]
+    public static string TakesScreenshot(string screenshotLocation)
+    {
+        //Directory path for saving screenshots
+        //dirPath = @"..\..\..\" + scFolderName;
+        string scFolderName = "Screenshot " + DateTime.Now.ToString("s");
+        string dirPath = screenshotLocation + scFolderName;
+        if (Directory.Exists(dirPath)==false)
+        {
+            var directoryInfo = Directory.CreateDirectory(dirPath);
+        }
+
+        // Screenshot path for returning the complete screenshot URL with its name
+        string scPath = Path.Combine(Directory.GetCurrentDirectory(), dirPath + @"\");
+        string testName = TestContext.CurrentContext.Test.Name.Replace('"', '\'').Replace(";", "-").Replace("/", "_");
+        int testNameLenght = TestContext.CurrentContext.Test.Name.Replace('"', '\'').Replace(";", "-").Replace("/", "_")
+            .Length;
+        testName = testNameLenght switch
+        {
+            > 50 => testName[..50] + "...",
+            _ => testName
+        };
+        
+        //Take screenshot and save it specified location
+
+        #region Take Screenshot and Save
+        //The image of the page as a Base64-encoded string.
+        ITakesScreenshot takesScreenshot = Driver as ITakesScreenshot ?? throw new InvalidOperationException($"The driver type '{Driver.GetType().FullName}' does not support taking screenshots.");
+        Screenshot screenshot = takesScreenshot.GetScreenshot();
+        string fileP = scPath + testName + "Screenshot_" + DateTime.Now.ToString("s") + ".png";
+        //screenshot.SaveAsFile(fileP,ScreenshotImageFormat.Png);
+        #endregion
+
+        #region Return Screen Shot Path
+        
+        string machineName = Environment.MachineName;
+        string fileHostName = "\\\\" + machineName + fileP;
+        var uri = new Uri(fileHostName);
+        string returnPath = null!;
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            returnPath = uri.AbsoluteUri.Replace("/","\\");
+        Debug.Assert(returnPath != null, nameof(returnPath) + " != null");
+        return returnPath;
+
+        #endregion
+    }
+
     #endregion
     
 }
