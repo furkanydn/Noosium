@@ -20,9 +20,9 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Noosium.Common;
 
-public class DriverUtilities
+public static class DriverUtilities
 {
-    public static readonly string Browser = Crid.GetAppSettings("Environment");
+    private static readonly string Browser = Crid.GetAppSettings("Environment");
     private static bool _acceptNextAlert = true;
     public static IWebDriver Driver;
 

@@ -91,6 +91,7 @@ public static class Extensions
             try
             {
                 webElement.Click();
+                TestContext.WriteLine( webElement +"Clicked ");
                 break;
             }
             catch (StaleElementReferenceException e)
@@ -170,6 +171,7 @@ public static class Extensions
             try
             {
                 webElement.SendKeys(textToBeEntered);
+                TestContext.WriteLine( webElement +"SendKeys " + textToBeEntered);
                 break;
             }
             catch (StaleElementReferenceException e)
@@ -220,7 +222,7 @@ public static class Extensions
     /// <param name="webElement">The arguments to the HTML element</param>
     public static void ScrollToElement(this IWebElement webElement)
     {
-        Actions actions = new Actions(DriverUtilities.Driver);
+        var actions = new Actions(DriverUtilities.Driver);
         actions.MoveToElement(webElement).Perform();
     }
 
