@@ -91,7 +91,7 @@ public static class Extensions
             try
             {
                 webElement.Click();
-                TestContext.WriteLine( webElement +"Clicked ");
+                TestContext.WriteLine( webElement + " Clicked.");
                 break;
             }
             catch (StaleElementReferenceException e)

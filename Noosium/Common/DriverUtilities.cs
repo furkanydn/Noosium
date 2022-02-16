@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Noosium.Common.Private.Objects;
 using Noosium.Utilities;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -22,9 +23,9 @@ namespace Noosium.Common;
 
 public static class DriverUtilities
 {
-    private static readonly string Browser = Crid.GetAppSettings("Environment");
+    private static readonly string Browser = Crid.GetAppSettings(CridAppSetting.Browser);
     private static bool _acceptNextAlert = true;
-    public static IWebDriver Driver;
+    public static IWebDriver Driver = null!;
 
     /// <summary>
     /// Returns a DateTime representing the current date and time. The resolution of the returned value depends on the system timer.
@@ -40,9 +41,18 @@ public static class DriverUtilities
     /// </summary>
     public static void LaunchBrowser()
     {
+        var ltOptions = new Dictionary<string, object>();
         switch (Browser.ToLower())
         {
             case "chrome":
+                DriverOptions driverOptions = new ChromeOptions();
+                driverOptions.AcceptInsecureCertificates = true;
+                ltOptions.Add("name", Crid.GetAppSettings(CridAppSetting.TestName));
+                ltOptions.Add("platformName", Crid.GetAppSettings(CridAppSetting.Platform));
+                ltOptions.Add("console","error");
+                ltOptions.Add("network",true);
+                ltOptions.Add("geoLocation",Crid.GetAppSettings(CridAppSetting.StateCode));
+                driverOptions.AddAdditionalOption("LT:Options", ltOptions);
                 Driver = new ChromeDriver();
                 TestContext.WriteLine("The driver will start Chrome without any input from the user.");
                 break;
@@ -69,6 +79,7 @@ public static class DriverUtilities
                 Driver = new PhantomJSDriver();
                 */
         }
+        Debug.Assert(Driver != null, nameof(Driver) + " != null");
         Driver.Manage().Window.Maximize();
         Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
     }
@@ -329,6 +340,7 @@ public static class DriverUtilities
     public static void NavigateToUrl(string url)
     {
         Driver.Navigate().GoToUrl(url);
+        TestContext.WriteLine("URL of web page to navigate to " + url);
     }
 
     /// <summary>

@@ -14,17 +14,20 @@ internal static class Elements
 
     #endregion
 
-    #region IWebElementsById
-
+    #region FindElementBy
     public static IWebElement GetElementById(string idElement)
     {
-        var idX = Driver.FindElement(By.Id(idElement)) ?? throw new ArgumentNullException($"Driver.FindElement(By.Id({idElement}))");
+        var idX = Driver.FindElement(By.Id(idElement)) ??
+                  throw new ArgumentNullException($"Driver.FindElement(By.Id({idElement}))");
         return idX;
     }
-    
-    //public readonly IWebElement _password = Driver.FindElement(By.Id("password"));
-    //public readonly IWebElement _captchaCode = Driver.FindElement(By.Id("captchaCode"));
-    //public readonly IWebElement _button = Driver.FindElement(By.Id("button"));
+
+    public static IWebElement GetElementByName(string nameElement)
+    {
+        var idX = Driver.FindElement(By.Name(nameElement)) ??
+                  throw new ArgumentNullException($"Driver.FindElement(By.Id({nameElement}))");
+        return idX;
+    }
 
     #endregion
     
