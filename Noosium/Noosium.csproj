@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
+
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -34,4 +36,7 @@
       <Folder Include="Screenshot" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Include="..\.editorconfig" />
+    </ItemGroup>
 </Project>

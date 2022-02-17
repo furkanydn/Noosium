@@ -5,25 +5,39 @@ using NUnit.Framework;
 namespace Noosium.Tests.Login;
 
 [Author("Admin, Manager, My")]
-[Category("Login")]
 [Description("A user login to System to access the functionality of the system.")]
 [TestFixture, Order(0)]
+[Platform(Exclude="Win98,WinXP,Vista")]
 public class LoginTest
 {
-    [SetUp]
-    public void Setup()
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
     {
         DriverUtilities.LaunchBrowser();
     }
 
-    [OneTimeTearDown]
-    protected void OneTimeTearDown()
+    [TearDown]
+    public void TearDown()
     {
         DriverUtilities.TearDown();
     }
 
-    [Description("Check results on entering valid Id & Password")]
+    [Description("Check results on entering Invalid User ID & Password")]
     [Test, Order(0)]
+    public void CheckAbilityEnteringInvalidIdPassword()
+    {
+        LoginPage.EnterInValidIdPassword();
+    }
+    
+    [Description("Check results on entering Invalid Captcha")]
+    [Test, Order(1)]
+    public void CheckAbilityEnteringInvalidCaptcha()
+    {
+        LoginPage.EnterInValidCaptcha();
+    }
+    
+    [Description("Check results on entering valid Username & Password")]
+    [Test, Order(2), Property("Severity","Major")]
     public void CheckAbilityEnteringValidIdPassword()
     {
         LoginPage.EnterValidIdPassword();

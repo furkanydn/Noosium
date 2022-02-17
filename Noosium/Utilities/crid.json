@@ -15,11 +15,14 @@
     },
     "Uri": {
         "BaseUrl": "https://test.motivist.com",
-        "Admin/Missions/COM": "/Admin/Missions/COM"
+        "Admin/Missions/COM": "/Admin/Missions/COM?groupId=33"
     },
     "Context": {
         "username": "furkan.aydin",
         "password": "Hadate25.",
-        "captcha": "NOOSN"
+        "captcha": "NOOSN",
+        "iusername": "invalid",
+        "ipassword": "Invalid",
+        "icaptcha": "HCT=("
     }
 }
