@@ -16,7 +16,7 @@
         <PackageReference Include="coverlet.collector" Version="3.1.0" />
         <PackageReference Include="Selenium.Support" Version="4.1.0" />
         <PackageReference Include="Selenium.WebDriver" Version="4.1.0" />
-        <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="97.0.4692.7100" />
+        <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="98.0.4758.10200" />
         <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     </ItemGroup>
 
@@ -34,9 +34,5 @@
 
     <ItemGroup>
       <Folder Include="Screenshot" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Include="..\.editorconfig" />
     </ItemGroup>
 </Project>

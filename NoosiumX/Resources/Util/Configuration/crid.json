@@ -1,0 +1,16 @@
+{
+    "System": {
+        "Exception": {
+            "UnSupportedOS": "Indicates that the API isn't compatible with the platform or operating system supplied. The API cannot be called from a prior version if a version is given.",
+            "UnSupportedBrowser": "You are using an unsupported browser. This app is compatible with the latest versions of Google Chrome, Mozilla Firefox, Apple Safari and Edge Chromium. Use one of the browsers listed above.",
+            "OperatingNullException": "You must guarantee that the value of a nullable type variable is not null before converting it to the underlying type.",
+            "InnerException": "OpenQA.Selenium. Unable to submit HTTP request for URL to remote WebDriver server due to WebDriverException.",
+            "InnerMessage": "For URL, there was an HTTP request error to the remote WebDriver server.",
+            "ExpectedServerMessage": "The external server could not be reached."
+        },
+        "Uri": {
+            "BaseUrl": "https://test.motivist.com",
+            "AdminMissionCom": "/Admin/Missions/COM?groupId=33"
+        }
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "Elements": {
+        "Web": {
+            "Default": "Debug",
+            "System": "Information",
+            "Microsoft": "Information"
+        }
+    }
+}

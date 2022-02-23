@@ -12,6 +12,6 @@ namespace Noosium.Common.Private.Elements
 
     internal struct MissionsCom
     {
-        public const string Missions = "Görevler";
+        public const string Missions = ".middle > .item:nth-child(1)";
     }
 }

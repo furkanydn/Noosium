@@ -84,7 +84,7 @@ public static class Extensions
     /// <exception cref="StaleElementReferenceException">Thrown when the target element is no longer valid in the document DOM.</exception>
     public static void ClickItem(this IWebElement webElement)
     {
-        int tryW=0;
+        var tryW=0;
         while (tryW < 3)
         {
             tryW += 1;
@@ -92,6 +92,7 @@ public static class Extensions
             {
                 webElement.Click();
                 TestContext.WriteLine( webElement + " Clicked.");
+                Thread.Sleep(2000);
                 break;
             }
             catch (StaleElementReferenceException e)

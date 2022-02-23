@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Configuration.Internal;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -83,7 +85,7 @@ public static class DriverUtilities
         Driver.Manage().Window.Maximize();
         Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
     }
-    
+
     /// <summary>
     /// Returns Assembly directory path
     /// </summary>
