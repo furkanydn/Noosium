@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using NoosiumX.Resources.NLog;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -8,18 +9,17 @@ namespace NoosiumX;
 public class FirstTest
 {
     private static readonly LogNLog NLog = new();
-    private IWebDriver _driver;
 
     public FirstTest()
     {
-        _driver = new ChromeDriver();
-        _driver.Manage().Window.Maximize();
+        //_driver = new ChromeDriver();
+        //_driver.Manage().Window.Maximize();
     }
     
     [Fact]
     public void CorrectTitleDisplayed_When_NavigateToHomePage()
     {
-        _driver.Navigate().GoToUrl("a");
+        //_driver.Navigate().GoToUrl("a");
         NLog.Error("message-template");
     }
 }
