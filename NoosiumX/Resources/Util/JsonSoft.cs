@@ -6,7 +6,7 @@ namespace NoosiumX.Resources.Util
     using Newtonsoft.Json;
     
     [Serializable]
-    public class JsonConvertor
+    public class JsonSoft
     {
         private static string _appSettings = AppContext.BaseDirectory + @"Resources/appsettings.json";
         private static string _contextJson = AppContext.BaseDirectory + @"Resources/Util/Configuration/context.json";
