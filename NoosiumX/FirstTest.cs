@@ -1,25 +1,24 @@
 using NoosiumX.Resources.Common.Private;
 using NoosiumX.Resources.Log;
 using NoosiumX.Resources.Util;
+using NoosiumX.Resources.Util.DriverMethods;
+using NoosiumX.WebDriver.Mock;
 using NUnit.Framework;
-using OpenQA.Selenium.Chrome;
-using WebDriverManager;
-using WebDriverManager.DriverConfigs.Impl;
-using WebDriverManager.Helpers;
 
 namespace NoosiumX;
 
-[TestFixture]
-public class FirstTest
+[TestFixture, 
+ Description("A user login to System to access the functionality of the system."),
+ Author("Admin, Manager, My"),
+ Platform(Exclude = "Win98,WinXP,Vista")]
+public class FirstTest : BaseMockDriver
 {
-    [Test]
+    [Test, Order(1)]
     public void CorrectTitleDisplayed_When_NavigateToHomePage()
     {
-        new DriverManager().SetUpDriver(new ChromeConfig(), VersionResolveStrategy.MatchingBrowser);
-        using var driver = new ChromeDriver();
-        driver.Navigate().GoToUrl(JsonSoft.GetUri(ElementSetting.BaseUrl));
+        BasicDriverInterface.NavigateToUrl(JsonSoft.GetUri(ElementSetting.BaseUrl));
         new TestLog().Information(
             $"{JsonSoft.GetUri(ElementSetting.BaseUrl)} opening in other tab /window as per requirement.");
-        Assert.AreEqual(driver.Title,"Noos Identity");
+        
     }
 }

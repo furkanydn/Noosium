@@ -16,6 +16,7 @@ namespace NoosiumX.Resources.Log
 
         public void Error(string message) =>
             TestContext.Progress.WriteLine("[Error]-"+$"{DateTime.UtcNow:s}-"+ message);
+
     }
 }
 
