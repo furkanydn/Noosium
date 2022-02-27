@@ -36,7 +36,7 @@ public class TakesScreenShot : BaseMockDriver
 
         #region Take Screenshot and Save
         //The image of the page as a Base64-encoded string.
-        var takesScreenshot = MockDriver as ITakesScreenshot ?? throw new InvalidOperationException($"The driver type '{MockDriver.GetType().FullName}' does not support taking screenshots.");
+        var takesScreenshot = Driver as ITakesScreenshot ?? throw new InvalidOperationException($"The driver type '{Driver.GetType().FullName}' does not support taking screenshots.");
         var screenshot = takesScreenshot.GetScreenshot();
         var fileP = scPath + testName + "Screenshot_" + DateTime.Now.ToString("s") + ".png";
         //screenshot.SaveAsFile(fileP,ScreenshotImageFormat.Png);

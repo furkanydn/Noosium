@@ -16,7 +16,7 @@ public class CollectionMethods : BaseMockDriver
     /// <returns>A <see cref="IReadOnlyCollection{T}"/> of all <see cref="IWebElement"/> matching the current criteria, or an empty list if nothing matches.</returns>
     public static List<IWebElement> GetCollection(By locator)
     {
-        List<IWebElement> webElements = MockDriver.FindElements(locator).ToList();
+        List<IWebElement> webElements = Driver.FindElements(locator).ToList();
         return webElements;
     }
 
@@ -27,7 +27,7 @@ public class CollectionMethods : BaseMockDriver
     /// <param name="destination">Element to (without releasing) at the destination location.</param>
     public static void DragAndDrop(IWebElement source, IWebElement destination)
     {
-        var actions = new Actions(MockDriver);
+        var actions = new Actions(Driver);
         actions.DragAndDrop(source,destination).Build().Perform();
     }
 

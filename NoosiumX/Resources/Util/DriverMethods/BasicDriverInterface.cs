@@ -22,10 +22,10 @@ internal class BasicDriverInterface : BaseMockDriver
     public static void SwitchToWindow(Expression<Func<IWebDriver, bool>> preExpression)
     {
         var pre = preExpression.Compile();
-        foreach (var handle in MockDriver.WindowHandles)
+        foreach (var handle in Driver.WindowHandles)
         {
-            MockDriver.SwitchTo().Window(handle);
-            if (!pre(MockDriver)) continue;
+            Driver.SwitchTo().Window(handle);
+            if (!pre(Driver)) continue;
             return;
         }
 
@@ -38,10 +38,7 @@ internal class BasicDriverInterface : BaseMockDriver
     /// <param name="url">The URL to load. It is best to use a fully qualified URL</param>
     public static void NavigateToUrl(string url)
     {
-        MockDriver.Url = url;
-        MockDriver.Navigate().GoToUrl(url);
-        Assert.AreEqual(expected: url, actual: MockDriver.Url);
-        Assert.AreEqual("Mock Gravity API Page Title",MockDriver.Title);
+        Driver.Navigate().GoToUrl(url);
     }
     
     /// <summary>
@@ -50,7 +47,7 @@ internal class BasicDriverInterface : BaseMockDriver
     /// <param name="locator">An ICoordinates describing where to click.</param>
     public static void ClickOnElement(By locator)
     {
-        MockDriver.FindElement(locator).Click();
+        Driver.FindElement(locator).Click();
     }
     
     /// <summary>
@@ -71,7 +68,7 @@ internal class BasicDriverInterface : BaseMockDriver
     /// <returns>The element to be wrapped</returns>
     public static SelectElement DropdownMenu(By dropDownLocator)
     {
-        var selectElement = new SelectElement(MockDriver.FindElement(dropDownLocator));
+        var selectElement = new SelectElement(Driver.FindElement(dropDownLocator));
         return selectElement;
     }
     
@@ -82,7 +79,7 @@ internal class BasicDriverInterface : BaseMockDriver
     /// <returns>Gets the innerText of this element, without any leading or trailing whitespace, and with other whitespace collapsed.</returns>
     public static string GetText(By locator)
     {
-        var txt = MockDriver.FindElement(locator).Text;
+        var txt = Driver.FindElement(locator).Text;
         return txt;
     }
     
@@ -94,7 +91,7 @@ internal class BasicDriverInterface : BaseMockDriver
     /// <returns>The attribute's current value. Returns a null if the value is not set.</returns>
     public static string GetAttributeValue(By locator, string attrName)
     {
-        string txt = MockDriver.FindElement(locator).GetAttribute(attrName);
+        string txt = Driver.FindElement(locator).GetAttribute(attrName);
         return txt;
     }
     
@@ -105,7 +102,7 @@ internal class BasicDriverInterface : BaseMockDriver
     /// <param name="requiredText">The text to type into the element.</param>
     public static void SendKeys(By locator, string requiredText)
     {
-        MockDriver.FindElement(locator).Clear();
-        MockDriver.FindElement(locator).SendKeys(requiredText);
+        Driver.FindElement(locator).Clear();
+        Driver.FindElement(locator).SendKeys(requiredText);
     }
 }

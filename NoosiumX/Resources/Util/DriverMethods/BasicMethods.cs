@@ -36,7 +36,7 @@ public class BasicMethods : BaseMockDriver
     {
         try
         {
-            MockDriver.SwitchTo().Alert();
+            Driver.SwitchTo().Alert();
             return true;
         }
         catch (NoAlertPresentException)
@@ -53,7 +53,7 @@ public class BasicMethods : BaseMockDriver
     {
         try
         {
-            var alert = MockDriver.SwitchTo().Alert();
+            var alert = Driver.SwitchTo().Alert();
             var alertText = alert.Text;
             if (_acceptNextAlert)
                 alert.Accept();
@@ -75,7 +75,7 @@ public class BasicMethods : BaseMockDriver
     {
         try
         {
-            var alert = MockDriver.SwitchTo().Alert();
+            var alert = Driver.SwitchTo().Alert();
             if (_acceptNextAlert)
                 alert.Accept();
             else

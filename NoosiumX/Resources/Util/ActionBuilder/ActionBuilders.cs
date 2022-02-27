@@ -12,7 +12,7 @@ public class ActionBuilders : BaseMockDriver
     /// <returns>A self reference.</returns>
     public static Actions ActionBuilder()
     {
-        var actionBuilder = new Actions(MockDriver);
+        var actionBuilder = new Actions(Driver);
         return actionBuilder;
     }
 

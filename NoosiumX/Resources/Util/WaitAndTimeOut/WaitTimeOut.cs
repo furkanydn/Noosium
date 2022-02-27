@@ -14,7 +14,7 @@ public class WaitTimeOut : BaseMockDriver
     /// <seealso cref="ITimeouts"/>
     public static void ImplicitWait(int seconds)
     {
-        MockDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
+        Driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(seconds);
     }
     
     /// <summary>
@@ -23,7 +23,7 @@ public class WaitTimeOut : BaseMockDriver
     /// <returns>The timeout in seconds</returns>
     public static WebDriverWait WebDriverWait()
     {
-        var webDriverWait = new WebDriverWait(MockDriver, TimeSpan.FromSeconds(30));
+        var webDriverWait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30));
         return webDriverWait;
     }
 
@@ -37,7 +37,7 @@ public class WaitTimeOut : BaseMockDriver
     /// <returns>The delegate's expected return type.</returns>
     public static void WaitForElementVisible(By locator)
     {
-        var wait = new WebDriverWait(MockDriver, TimeSpan.FromSeconds(30));
+        var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30));
         wait.Until(condition => condition.FindElement(locator));
     }
 }

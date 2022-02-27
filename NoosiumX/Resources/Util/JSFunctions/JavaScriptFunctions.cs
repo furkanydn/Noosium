@@ -13,7 +13,7 @@ public class JavaScriptFunctions : BaseMockDriver
     /// <exception cref="NotSupportedException">The exception that is thrown when an invoked method is not supported, or when there is an attempt to read, seek, or write to a stream that does not support the invoked functionality.</exception>
     private static IJavaScriptExecutor GetJavaScriptExecutor()
     {
-        var javaScriptExecutor = MockDriver as IJavaScriptExecutor ??
+        var javaScriptExecutor = Driver as IJavaScriptExecutor ??
                     throw new NotSupportedException("Underlying driver instance does not support executing JavaScript");
         return javaScriptExecutor;
     }
