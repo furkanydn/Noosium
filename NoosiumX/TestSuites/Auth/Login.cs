@@ -1,8 +1,12 @@
+
 namespace NoosiumX.TestSuites.Auth
 {
-    using WebDriver.Mock;
     using NoosiumX.WebDriver.TestCases.Desktop.Auth;
     using NUnit.Framework;
+    using Resources.Util;
+    using Resources.Util.DriverMethods;
+    using Resources.Log;
+    using WebDriver.Mock;
     
     [TestFixture,
      Order(0),
@@ -15,7 +19,13 @@ namespace NoosiumX.TestSuites.Auth
         [Test, Order(3)]
         public void CorrectTitleDisplayed_When_NavigateToHomePage()
         {
-            LoginTests.CheckResponse_ShouldNavigateToMissionPage_WhenValidIdPasswordEntered();
+            if (!BasicDriverInterface.IsSessionActive())
+                LoginTests.CheckResponse_ShouldNavigateToMissionPage_WhenValidIdPasswordEntered();
+            else
+            {
+                Assert.Ignore();
+                new TestLog().Warning(JsonSoft.GetException("AlreadyLoggedIn"));
+            }
         }
 
         [Test, Order(2)]

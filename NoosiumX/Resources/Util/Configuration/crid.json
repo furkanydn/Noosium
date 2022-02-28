@@ -6,7 +6,8 @@
             "OperatingNullException": "You must guarantee that the value of a nullable type variable is not null before converting it to the underlying type.",
             "InnerException": "OpenQA.Selenium. Unable to submit HTTP request for URL to remote WebDriver server due to WebDriverException.",
             "InnerMessage": "For URL, there was an HTTP request error to the remote WebDriver server.",
-            "ExpectedServerMessage": "The external server could not be reached."
+            "ExpectedServerMessage": "The external server could not be reached.",
+            "AlreadyLoggedIn": "You already logged in. Close your old session and create a new one."
         },
         "Uri": {
             "BaseUrl": "https://test.motivist.com",

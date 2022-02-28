@@ -1,5 +1,6 @@
 using System;
 using System.Linq.Expressions;
+using NoosiumX.Resources.Common.Private;
 using NoosiumX.WebDriver.Mock;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -13,6 +14,12 @@ internal class BasicDriverInterface : BaseMockDriver
     {
         return new BasicDriverInterface();
     }
+
+    /// <summary>
+    /// It's the mechanism for determining the session status based on the session's username.
+    /// </summary>
+    /// <returns>If you're logged in, it returns true; otherwise, it returns false.</returns>
+    public static bool IsSessionActive() => Driver.FindElements(By.CssSelector(JsonSoft.GetElement(ElementNames.SessionUsername))).Count>0;
 
     /// <summary>
     /// You can sift through both windows or tabs that WebDriver can see and switch to the other tab if you only have two tabs or windows open and know which one you started with.
@@ -91,7 +98,7 @@ internal class BasicDriverInterface : BaseMockDriver
     /// <returns>The attribute's current value. Returns a null if the value is not set.</returns>
     public static string GetAttributeValue(By locator, string attrName)
     {
-        string txt = Driver.FindElement(locator).GetAttribute(attrName);
+        var txt = Driver.FindElement(locator).GetAttribute(attrName);
         return txt;
     }
     
@@ -112,10 +119,5 @@ internal class BasicDriverInterface : BaseMockDriver
     public static string GetDriverUrl()
     {
         return Driver.Url.Split('?')[0];
-    }
-
-    public static IWebDriver GetIWebDriver()
-    {
-        return Driver;
     }
 }

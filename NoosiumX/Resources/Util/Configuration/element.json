@@ -1,7 +1,8 @@
 {
     "Elements": {
         "Web": {
-            "Default": "Debug",
+            "session-username": ".horizontally > .right",
+            "session-logout": ".out",
             "System": "Information",
             "Microsoft": "Information"
         }

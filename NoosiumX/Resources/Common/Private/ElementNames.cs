@@ -13,6 +13,8 @@ namespace NoosiumX.Resources.Common.Private
         public const string FormMessages = "form-messages";
         public const string AlertStrong = "strong";
         // Mission Com
+        public const string SessionUsername = "session-username";
+        public const string SessionLogOut = "session-logout";
         public const string Missions = ".middle > .item:nth-child(1)";
     }
 }

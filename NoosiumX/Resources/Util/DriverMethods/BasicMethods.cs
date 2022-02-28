@@ -10,6 +10,7 @@ public class BasicMethods : BaseMockDriver
 {
     private static bool _acceptNextAlert = true;
     
+    
     /// <summary>
     /// Is the method used to verify a presence of a web element within the webpage. The method returns a “true” value if the specified web element is present on the web page and a “false” value if the web element is not present on the web page.
     /// </summary>
