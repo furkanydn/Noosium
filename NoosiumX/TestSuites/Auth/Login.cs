@@ -1,4 +1,3 @@
-
 namespace NoosiumX.TestSuites.Auth
 {
     using NoosiumX.WebDriver.TestCases.Desktop.Auth;
