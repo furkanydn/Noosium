@@ -105,4 +105,17 @@ internal class BasicDriverInterface : BaseMockDriver
         Driver.FindElement(locator).Clear();
         Driver.FindElement(locator).SendKeys(requiredText);
     }
+    
+    /// <summary>
+    /// Gets the URL the browser is currently displaying.
+    /// </summary>
+    public static string GetDriverUrl()
+    {
+        return Driver.Url.Split('?')[0];
+    }
+
+    public static IWebDriver GetIWebDriver()
+    {
+        return Driver;
+    }
 }

@@ -1,30 +1,32 @@
-using NoosiumX.Resources.Log;
-using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using WebDriverManager;
-using WebDriverManager.DriverConfigs.Impl;
-
-namespace NoosiumX.WebDriver.Mock;
-
-public class BaseMockDriver
+namespace NoosiumX.WebDriver.Mock
 {
-    protected static IWebDriver Driver { get; set; } = default!;
-
-    [OneTimeSetUp]
-    public void GlobalTestSetUp()
+    using Resources.Log;
+    using NoosiumX.WebDriver.TestCases.Desktop.Auth;
+    using NUnit.Framework;
+    using OpenQA.Selenium;
+    using OpenQA.Selenium.Chrome;
+    using WebDriverManager;
+    using WebDriverManager.DriverConfigs.Impl;
+    
+    public class BaseMockDriver
     {
-        new DriverManager().SetUpDriver(new ChromeConfig());
-        Driver = new ChromeDriver();
-        new TestLog().Debug("The tests were started by the driver.");
-        // login
-    }
+        protected static IWebDriver Driver { get; set; } = default!;
 
-    [OneTimeTearDown]
-    public void GlobalTestTearDown()
-    {
-        //logout
-        Driver.Quit();
-        new TestLog().Debug("The tests have been completed by the driver.");
+        [OneTimeSetUp]
+        public void GlobalTestSetUp()
+        {
+            new DriverManager().SetUpDriver(new ChromeConfig());
+            Driver = new ChromeDriver();
+            new TestLog().Debug("The tests were started by the driver.");
+            //LoginTests.CheckResponse_ShouldNavigateToMissionPage_WhenValidIdPasswordEntered();
+        }
+
+        [OneTimeTearDown]
+        public void GlobalTestTearDown()
+        {
+            //logout
+            Driver.Quit();
+            new TestLog().Debug("The tests have been completed by the driver.");
+        }
     }
 }

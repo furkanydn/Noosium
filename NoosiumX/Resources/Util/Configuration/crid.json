@@ -10,7 +10,7 @@
         },
         "Uri": {
             "BaseUrl": "https://test.motivist.com",
-            "AdminMissionCom": "/Admin/Missions/COM?groupId=33"
+            "AdminMissionCom": "/Admin/Missions/COM"
         }
     }
 }
