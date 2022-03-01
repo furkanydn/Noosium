@@ -120,4 +120,12 @@ internal class BasicDriverInterface : BaseMockDriver
     {
         return Driver.Url.Split('?')[0];
     }
+    
+    /// <summary>
+    /// Gets the URL the browser is currently displaying with out split.
+    /// </summary>
+    public static string GetDriverUrlWithOutSplit()
+    {
+        return Driver.Url;
+    }
 }

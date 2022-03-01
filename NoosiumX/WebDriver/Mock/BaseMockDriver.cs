@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using OpenQA.Selenium.DevTools;
-
 namespace NoosiumX.WebDriver.Mock
 {
     using Resources.Log;
@@ -13,6 +10,11 @@ namespace NoosiumX.WebDriver.Mock
     using Resources.Util;
     using Resources.Util.DriverMethods;
     using Resources.Common.Private;
+    using System.Collections.Generic;
+    using OpenQA.Selenium.Edge;
+    using OpenQA.Selenium.Firefox;
+    using OpenQA.Selenium.Opera;
+    using OpenQA.Selenium.Safari;
     
     public class BaseMockDriver
     {
@@ -34,6 +36,9 @@ namespace NoosiumX.WebDriver.Mock
             new TestLog().Debug("The tests have been completed by the driver.");
         }
 
+        /// <summary>
+        /// Check Session method is used to return the current session status.
+        /// </summary>
         private static void CheckSession()
         {
             if (!BasicDriverInterface.IsSessionActive())
@@ -41,7 +46,7 @@ namespace NoosiumX.WebDriver.Mock
             else
                 new TestLog().Warning(JsonSoft.GetException("AlreadyLoggedIn"));
         }
-        
+
         /// <summary>
         /// This method is used to launch the browser (driver) based on the browser configured in DriverOptionsManager.
         /// </summary>
@@ -52,21 +57,40 @@ namespace NoosiumX.WebDriver.Mock
             {
                 case "chrome":
                     new DriverManager().SetUpDriver(new ChromeConfig());
-                    Driver = new ChromeDriver(DriverOptionsManager());
+                    Driver = new ChromeDriver(DriverOptionsManager() as ChromeOptions);
                     new TestLog().Debug("The Google Chrome Driver was installed using custom settings.");
                     break;
                 case "edge":
+                    new DriverManager().SetUpDriver(new EdgeConfig());
+                    Driver = new EdgeDriver(DriverOptionsManager() as EdgeOptions);
+                    new TestLog().Debug("The Edge Driver was installed using custom settings.");
+                    break;
+                case "firefox":
+                    new DriverManager().SetUpDriver(new FirefoxConfig());
+                    Driver = new FirefoxDriver(DriverOptionsManager() as FirefoxOptions);
+                    new TestLog().Debug("The Firefox Driver was installed using custom settings.");
+                    break;
+                case "opera":
+                    new DriverManager().SetUpDriver(new OperaConfig());
+                    Driver = new OperaDriver(DriverOptionsManager() as OperaOptions);
+                    new TestLog().Debug("The Opera Driver was installed using custom settings.");
+                    break;
+                case "safari":
+                    Driver = new SafariDriver(DriverOptionsManager() as SafariOptions);
+                    new TestLog().Debug("The Safari Driver was installed using custom settings.");
+                    break;
+                default:
+                    new TestLog().Error("We're sorry, but the driver you requested could not be located. You can contact us to report the issue.");
                     break;
             }
         }
-
         /// <summary>
-        /// This method is used to start the driver utilizing driver-specific starting options.
+        /// In order to create a new session by Selenium WebDriver, the local end should provide the basic capabilities to the remote end. The remote end uses the same set of capabilities to create a session and describes the current session features.
         /// </summary>
-        /// <returns>Custom Capabilities</returns>
-        private static ChromeOptions DriverOptionsManager()
+        /// <returns>WebDriver provides capabilities.</returns>
+
+        private static Dictionary<string, object> TestCapabilitiesOptions()
         {
-            
             var ltOptions = new Dictionary<string, object>
             {
                 {"build", JsonSoft.GetAppSetting("TestBuildName")},
@@ -76,13 +100,21 @@ namespace NoosiumX.WebDriver.Mock
                 {"network", true},
                 {"geoLocation", JsonSoft.GetAppSetting("StateCode")}
             };
-
+            return ltOptions;
+        }
+        
+        /// <summary>
+        /// This method is used to start the driver utilizing driver-specific starting options.
+        /// </summary>
+        /// <returns>Custom Browser Capabilities</returns>
+        private static DriverOptions DriverOptionsManager()
+        {
             var chromeOptions = new ChromeOptions
             {
                 AcceptInsecureCertificates = true,
                 PlatformName = JsonSoft.GetAppSetting("Platform")
             };
-            chromeOptions.AddAdditionalOption("options",ltOptions);
+            chromeOptions.AddAdditionalOption("options",TestCapabilitiesOptions());
 
             return chromeOptions;
         }

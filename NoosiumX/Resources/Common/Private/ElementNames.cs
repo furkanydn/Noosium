@@ -15,6 +15,7 @@ namespace NoosiumX.Resources.Common.Private
         // Mission Com
         public const string SessionUsername = "session-username";
         public const string SessionLogOut = "session-logout";
+        public const string SecondaryMenuActive = "secondary-menu-active";
         public const string Missions = ".middle > .item:nth-child(1)";
     }
 }
