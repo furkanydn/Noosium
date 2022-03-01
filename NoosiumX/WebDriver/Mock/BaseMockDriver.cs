@@ -1,4 +1,5 @@
-using NoosiumX.Resources.Common.Private;
+using System.Collections.Generic;
+using OpenQA.Selenium.DevTools;
 
 namespace NoosiumX.WebDriver.Mock
 {
@@ -11,6 +12,7 @@ namespace NoosiumX.WebDriver.Mock
     using WebDriverManager.DriverConfigs.Impl;
     using Resources.Util;
     using Resources.Util.DriverMethods;
+    using Resources.Common.Private;
     
     public class BaseMockDriver
     {
@@ -19,9 +21,8 @@ namespace NoosiumX.WebDriver.Mock
         [OneTimeSetUp]
         public void GlobalTestSetUp()
         {
-            new DriverManager().SetUpDriver(new ChromeConfig());
-            Driver = new ChromeDriver();
             new TestLog().Debug("The tests were started by the driver.");
+            DriverCreateByBrowser();
             CheckSession();
         }
 
@@ -40,9 +41,50 @@ namespace NoosiumX.WebDriver.Mock
             else
                 new TestLog().Warning(JsonSoft.GetException("AlreadyLoggedIn"));
         }
-        /*
-         * private void Driver Create By Browser
-         */
         
+        /// <summary>
+        /// This method is used to launch the browser (driver) based on the browser configured in DriverOptionsManager.
+        /// </summary>
+        private static void DriverCreateByBrowser()
+        {
+            var browser = JsonSoft.GetAppSetting("Browser");
+            switch (browser.ToLower())
+            {
+                case "chrome":
+                    new DriverManager().SetUpDriver(new ChromeConfig());
+                    Driver = new ChromeDriver(DriverOptionsManager());
+                    new TestLog().Debug("The Google Chrome Driver was installed using custom settings.");
+                    break;
+                case "edge":
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// This method is used to start the driver utilizing driver-specific starting options.
+        /// </summary>
+        /// <returns>Custom Capabilities</returns>
+        private static ChromeOptions DriverOptionsManager()
+        {
+            
+            var ltOptions = new Dictionary<string, object>
+            {
+                {"build", JsonSoft.GetAppSetting("TestBuildName")},
+                {"headless",true},
+                {"selenium_version","4.1.0"},
+                {"console", "error"},
+                {"network", true},
+                {"geoLocation", JsonSoft.GetAppSetting("StateCode")}
+            };
+
+            var chromeOptions = new ChromeOptions
+            {
+                AcceptInsecureCertificates = true,
+                PlatformName = JsonSoft.GetAppSetting("Platform")
+            };
+            chromeOptions.AddAdditionalOption("options",ltOptions);
+
+            return chromeOptions;
+        }
     }
 }
