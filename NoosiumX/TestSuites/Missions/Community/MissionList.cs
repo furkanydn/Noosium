@@ -13,9 +13,11 @@ namespace NoosiumX.TestSuites.Missions.Community
     public class MissionList : BaseMockDriver
     {
         [Test, Order(0)]
-        public void CorrectMissionDisplayed_When_SwitchTheSecondaryMenu()
+        public void CorrectMissionDisplayed_When_SwitchThePrimaryMenu()
         {
-            MissionCommunityList.CheckComponent_ShouldGetMissionInTheSubScatter_WhenChildClicked();
+            MissionCommunityList.CheckComponent_ShouldGetUserMissionList_WhenPrimaryMenuClicked();
+            
+            MissionCommunityList.CheckComponent_ShouldGetMissionListDetails_WhenSecondaryMenuClicked();
         }
     }
 }

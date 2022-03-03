@@ -15,11 +15,17 @@ namespace NoosiumX.Resources.Common.Private
         // Mission Com
         public const string SessionUsername = "session-username";
         public const string SessionLogOut = "session-logout";
-        public const string PrimaryMenuActive = "primary-menu-active";
+        
+        public const string PrimaryMenuFirst = "primary-menu-active";
         public const string PrimaryMenuSecond = "primary-menu-second";
         public const string PrimaryMenuThird = "primary-menu-third";
-        public const string SecondaryMenuActive = "secondary-menu-active";
-        public const string SecondaryMenuChildTwo = "secondary-menu-child-two";
+        
+        public const string SecondaryMenuFirst = "secondary-menu-child-first";
+        public const string SecondaryMenuFirstCircular = "secondary-menu-child-first-circular";
+        public const string SecondaryMenuSecond = "secondary-menu-child-second";
+        public const string SecondaryMenuThird = "secondary-menu-child-third";
+        public const string SecondaryMenuFour = "secondary-menu-child-four";
+        
         public const string Missions = ".middle > .item:nth-child(1)";
     }
 }
