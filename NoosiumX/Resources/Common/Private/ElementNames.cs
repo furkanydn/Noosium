@@ -16,7 +16,7 @@ namespace NoosiumX.Resources.Common.Private
         public const string SessionUsername = "session-username";
         public const string SessionLogOut = "session-logout";
         
-        public const string PrimaryMenuFirst = "primary-menu-active";
+        public const string PrimaryMenuFirst = "primary-menu-first";
         public const string PrimaryMenuSecond = "primary-menu-second";
         public const string PrimaryMenuThird = "primary-menu-third";
         

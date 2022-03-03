@@ -2,7 +2,6 @@ using System;
 using System.Linq.Expressions;
 using NoosiumX.Resources.Common.Private;
 using NoosiumX.WebDriver.Mock;
-using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
@@ -47,7 +46,7 @@ internal class BasicDriverInterface : BaseMockDriver
     {
         Driver.Navigate().GoToUrl(url);
     }
-    
+
     /// <summary>
     /// Clicks at a set of coordinates using the primary mouse button.
     /// </summary>

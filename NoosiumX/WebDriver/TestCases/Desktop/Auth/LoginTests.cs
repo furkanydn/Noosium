@@ -1,11 +1,10 @@
-using System.Threading;
-
 namespace NoosiumX.WebDriver.TestCases.Desktop.Auth
 {
     using NUnit.Framework;
     using Resources.Common.Private;
     using Resources.Log;
     using Resources.Util;
+    using System.Threading;
     using OpenQA.Selenium;
     using static Resources.Util.DriverMethods.BasicDriverInterface;
 

@@ -50,7 +50,7 @@ namespace NoosiumX.WebDriver.Mock
         /// <summary>
         /// This method is used to launch the browser (driver) based on the browser configured in DriverOptionsManager.
         /// </summary>
-        private static void DriverCreateByBrowser()
+        public static void DriverCreateByBrowser()
         {
             var browser = JsonSoft.GetAppSetting("Browser");
             switch (browser.ToLower())

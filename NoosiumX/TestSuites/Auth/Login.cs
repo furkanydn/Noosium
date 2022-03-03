@@ -1,8 +1,11 @@
+using NoosiumX.Resources.Log;
+using NoosiumX.WebDriver.Mock;
+
 namespace NoosiumX.TestSuites.Auth
 {
     using NoosiumX.WebDriver.TestCases.Desktop.Auth;
     using NUnit.Framework;
-
+    
     [TestFixture,
      Order(0),
      Description("A user login to System to access the functionality of the system."),
@@ -11,6 +14,13 @@ namespace NoosiumX.TestSuites.Auth
      NonParallelizable]
     public class Login
     {
+        [OneTimeSetUp]
+        public void TestSetUp()
+        {
+            new TestLog().Debug("The tests were started by the driver.");
+            BaseMockDriver.DriverCreateByBrowser();
+        }
+        
         [Test, Order(3)]
         public void CorrectTitleDisplayed_When_NavigateToHomePage()
         {

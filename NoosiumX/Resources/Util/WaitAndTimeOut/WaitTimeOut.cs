@@ -42,7 +42,7 @@ public class WaitTimeOut : BaseMockDriver
     /// <returns>The delegate's expected return type.</returns>
     public static void WaitForElementVisible(By locator)
     {
-        var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+        var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30));
         wait.Until(condition => condition.FindElement(locator));
     }
 }
