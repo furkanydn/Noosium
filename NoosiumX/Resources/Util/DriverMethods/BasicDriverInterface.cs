@@ -54,6 +54,7 @@ internal class BasicDriverInterface : BaseMockDriver
     /// <param name="locator">An ICoordinates describing where to click.</param>
     public static void ClickOnElement(By locator)
     {
+        WaitAndTimeOut.WaitTimeOut.WaitForElementVisible(locator);
         Driver.FindElement(locator).Click();
     }
     

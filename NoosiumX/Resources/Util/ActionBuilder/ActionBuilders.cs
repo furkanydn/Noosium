@@ -6,11 +6,16 @@ namespace NoosiumX.Resources.Util.ActionBuilder;
 
 public class ActionBuilders : BaseMockDriver
 {
+    public static ActionBuilders GetCreateInstance()
+    {
+        return new ActionBuilders();
+    }
+
     /// <summary>
     /// The user-facing API for emulating complex user gestures. Use this class rather than using the Keyboard or Mouse directly.
     /// </summary>
     /// <returns>A self reference.</returns>
-    public static Actions ActionBuilder()
+    private static Actions ActionBuilder()
     {
         var actionBuilder = new Actions(Driver);
         return actionBuilder;

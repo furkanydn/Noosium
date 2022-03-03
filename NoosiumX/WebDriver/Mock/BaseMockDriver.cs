@@ -15,7 +15,7 @@ namespace NoosiumX.WebDriver.Mock
     using OpenQA.Selenium.Firefox;
     using OpenQA.Selenium.Opera;
     using OpenQA.Selenium.Safari;
-    
+
     public class BaseMockDriver
     {
         protected static IWebDriver Driver { get; private set; } = default!;
@@ -57,66 +57,131 @@ namespace NoosiumX.WebDriver.Mock
             {
                 case "chrome":
                     new DriverManager().SetUpDriver(new ChromeConfig());
-                    Driver = new ChromeDriver(DriverOptionsManager() as ChromeOptions);
+                    Driver = new ChromeDriver();
                     new TestLog().Debug("The Google Chrome Driver was installed using custom settings.");
                     break;
                 case "edge":
                     new DriverManager().SetUpDriver(new EdgeConfig());
-                    Driver = new EdgeDriver(DriverOptionsManager() as EdgeOptions);
+                    Driver = new EdgeDriver();
                     new TestLog().Debug("The Edge Driver was installed using custom settings.");
                     break;
                 case "firefox":
                     new DriverManager().SetUpDriver(new FirefoxConfig());
-                    Driver = new FirefoxDriver(DriverOptionsManager() as FirefoxOptions);
+                    Driver = new FirefoxDriver();
                     new TestLog().Debug("The Firefox Driver was installed using custom settings.");
                     break;
                 case "opera":
                     new DriverManager().SetUpDriver(new OperaConfig());
-                    Driver = new OperaDriver(DriverOptionsManager() as OperaOptions);
+                    Driver = new OperaDriver();
                     new TestLog().Debug("The Opera Driver was installed using custom settings.");
                     break;
                 case "safari":
-                    Driver = new SafariDriver(DriverOptionsManager() as SafariOptions);
+                    Driver = new SafariDriver();
                     new TestLog().Debug("The Safari Driver was installed using custom settings.");
                     break;
                 default:
-                    new TestLog().Error("We're sorry, but the driver you requested could not be located. You can contact us to report the issue.");
+                    new TestLog().Error(
+                        "We're sorry, but the driver you requested could not be located. You can contact us to report the issue.");
                     break;
             }
         }
+
         /// <summary>
         /// In order to create a new session by Selenium WebDriver, the local end should provide the basic capabilities to the remote end. The remote end uses the same set of capabilities to create a session and describes the current session features.
         /// </summary>
         /// <returns>WebDriver provides capabilities.</returns>
-
         private static Dictionary<string, object> TestCapabilitiesOptions()
         {
             var ltOptions = new Dictionary<string, object>
             {
                 {"build", JsonSoft.GetAppSetting("TestBuildName")},
-                {"headless",true},
-                {"selenium_version","4.1.0"},
+                {"headless", true},
+                {"selenium_version", "4.1.0"},
                 {"console", "error"},
                 {"network", true},
                 {"geoLocation", JsonSoft.GetAppSetting("StateCode")}
             };
             return ltOptions;
         }
-        
+
+        #region Driver Options Managers
+
         /// <summary>
         /// This method is used to start the driver utilizing driver-specific starting options.
         /// </summary>
-        /// <returns>Custom Browser Capabilities</returns>
-        private static DriverOptions DriverOptionsManager()
+        /// <returns>Custom Chrome Browser Capabilities</returns>
+        private static ChromeOptions ChromeOptionsManager()
         {
             var chromeOptions = new ChromeOptions
             {
                 AcceptInsecureCertificates = true,
                 PlatformName = JsonSoft.GetAppSetting("Platform")
             };
-            chromeOptions.AddAdditionalOption("options",TestCapabilitiesOptions());
+            chromeOptions.AddAdditionalOption("options", TestCapabilitiesOptions());
 
             return chromeOptions;
         }
+
+        /// <summary>
+        /// This method is used to start the driver utilizing driver-specific starting options.
+        /// </summary>
+        /// <returns>Custom Edge Browser Capabilities</returns>
+        private static EdgeOptions EdgeOptionsManager()
+        {
+            var edgeOptions = new EdgeOptions
+            {
+                PlatformName = JsonSoft.GetAppSetting("Platform")
+            };
+            edgeOptions.AddAdditionalOption("options", TestCapabilitiesOptions());
+
+            return edgeOptions;
+        }
+
+        /// <summary>
+        /// This method is used to start the driver utilizing driver-specific starting options.
+        /// </summary>
+        /// <returns>Custom Firefox Browser Capabilities</returns>
+        private static FirefoxOptions FirefoxOptionsManager()
+        {
+            var firefoxOptions = new FirefoxOptions()
+            {
+                PlatformName = JsonSoft.GetAppSetting("Platform")
+            };
+            firefoxOptions.AddAdditionalOption("options", TestCapabilitiesOptions());
+
+            return firefoxOptions;
+        }
+
+        /// <summary>
+        /// This method is used to start the driver utilizing driver-specific starting options.
+        /// </summary>
+        /// <returns>Custom Edge Browser Capabilities</returns>
+        private static OperaOptions OperaOptionsManager()
+        {
+            var operaOptions = new OperaOptions()
+            {
+                PlatformName = JsonSoft.GetAppSetting("Platform")
+            };
+            operaOptions.AddAdditionalOption("options", TestCapabilitiesOptions());
+
+            return operaOptions;
+        }
+
+        /// <summary>
+        /// This method is used to start the driver utilizing driver-specific starting options.
+        /// </summary>
+        /// <returns>Custom Edge Browser Capabilities</returns>
+        private static SafariOptions SafariOptionsManager()
+        {
+            var safariOptions = new SafariOptions()
+            {
+                PlatformName = JsonSoft.GetAppSetting("Platform")
+            };
+            safariOptions.AddAdditionalOption("options", TestCapabilitiesOptions());
+
+            return safariOptions;
+        }
+
+        #endregion
     }
 }

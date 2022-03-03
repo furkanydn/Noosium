@@ -23,7 +23,7 @@ public class BasicMethods : BaseMockDriver
             ActionBuilder.ActionBuilders.SetFocusOnIWebElement(webElement);
             return true;
         }
-        catch (NoSuchElementException n)
+        catch
         {
             return false;
         }

@@ -3,7 +3,11 @@
         "Web": {
             "session-username": ".horizontally > .right",
             "session-logout": ".out",
+            "primary-menu-active": ".oo-primaryMenu > .active",
+            "primary-menu-second": ".oo-primaryMenu > .item:nth-child(2)",
+            "primary-menu-third": ".oo-primaryMenu > .item:nth-child(3)",
             "secondary-menu-active": ".oo-secondaryMenu > .active",
+            "secondary-menu-child-two": ".oo-secondaryMenu > .item:nth-child(2)",
             "System": "Information",
             "Microsoft": "Information"
         }

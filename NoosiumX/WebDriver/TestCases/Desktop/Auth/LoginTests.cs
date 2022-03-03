@@ -1,3 +1,5 @@
+using System.Threading;
+
 namespace NoosiumX.WebDriver.TestCases.Desktop.Auth
 {
     using NUnit.Framework;
@@ -12,26 +14,27 @@ namespace NoosiumX.WebDriver.TestCases.Desktop.Auth
         public static void CheckResponse_ShouldNavigateToMissionPage_WhenValidIdPasswordEntered()
         {
             NavigateToUrl(JsonSoft.GetUri(ElementSetting.BaseUrl));
-            new TestLog().Debug($"{JsonSoft.GetUri(ElementSetting.BaseUrl)} opening in other tab /window as per requirement.");
+            new TestLog().Information($"{JsonSoft.GetUri(ElementSetting.BaseUrl)} opening in other tab /window as per requirement.");
             
             ClickOnElement(By.Id(ElementNames.Username));
-            new TestLog().Debug($"{ElementNames.Username} Clicked.");
+            new TestLog().Information($"{ElementNames.Username} Clicked.");
             SendKeys(By.Id(ElementNames.Username),JsonSoft.GetContext(ElementValues.UserName));
-            new TestLog().Debug($"{JsonSoft.GetContext(ElementValues.UserName)} Sent.");
+            new TestLog().Information($"{JsonSoft.GetContext(ElementValues.UserName)} Sent.");
             
             ClickOnElement(By.Id(ElementNames.Password));
-            new TestLog().Debug($"{ElementNames.Password} Clicked.");
+            new TestLog().Information($"{ElementNames.Password} Clicked.");
             SendKeys(By.Id(ElementNames.Password), JsonSoft.GetContext(ElementValues.Password));
-            new TestLog().Debug($"{JsonSoft.GetContext(ElementValues.Password)} Sent.");
+            new TestLog().Information($"{JsonSoft.GetContext(ElementValues.Password)} Sent.");
             
             ClickOnElement(By.Id(ElementNames.CaptchaCode));
-            new TestLog().Debug($"{ElementNames.CaptchaCode} Clicked.");
+            new TestLog().Information($"{ElementNames.CaptchaCode} Clicked.");
             SendKeys(By.Id(ElementNames.CaptchaCode), JsonSoft.GetContext(ElementValues.Captcha));
-            new TestLog().Debug($"{JsonSoft.GetContext(ElementValues.Captcha)} Sent.");
+            new TestLog().Information($"{JsonSoft.GetContext(ElementValues.Captcha)} Sent.");
             
             ClickOnElement(By.Name(ElementNames.Button));
-            new TestLog().Debug($"{ElementNames.Button} Clicked.");
+            new TestLog().Information($"{ElementNames.Button} Clicked.");
             
+            Thread.Sleep(2000);
             Assert.That(GetDriverUrl(),Is.EqualTo(JsonSoft.GetUri("BaseUrl")+JsonSoft.GetUri("AdminMissionCom")));
         }
 

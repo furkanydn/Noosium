@@ -1,9 +1,8 @@
-
-
 namespace NoosiumX.TestSuites.Missions.Community
 {
     using NUnit.Framework;
     using WebDriver.Mock;
+    using NoosiumX.WebDriver.TestCases.Desktop.Missions.Community;
     
     [TestFixture,
      Order(1),
@@ -13,7 +12,11 @@ namespace NoosiumX.TestSuites.Missions.Community
      NonParallelizable]
     public class MissionList : BaseMockDriver
     {
-        
+        [Test, Order(0)]
+        public void CorrectMissionDisplayed_When_SwitchTheSecondaryMenu()
+        {
+            MissionCommunityList.CheckComponent_ShouldGetMissionInTheSubScatter_WhenChildClicked();
+        }
     }
 }
 

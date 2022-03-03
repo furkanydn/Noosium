@@ -7,6 +7,11 @@ namespace NoosiumX.Resources.Util.WaitAndTimeOut;
 
 public class WaitTimeOut : BaseMockDriver
 {
+    public static WaitTimeOut GetCreateInstance()
+    {
+        return new WaitTimeOut();
+    }
+
     /// <summary>
     /// Specifies the amount of time the driver should wait when searching for an element if it is not immediately present.
     /// </summary>
@@ -37,7 +42,7 @@ public class WaitTimeOut : BaseMockDriver
     /// <returns>The delegate's expected return type.</returns>
     public static void WaitForElementVisible(By locator)
     {
-        var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(30));
+        var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
         wait.Until(condition => condition.FindElement(locator));
     }
 }
