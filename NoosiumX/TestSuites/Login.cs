@@ -1,9 +1,8 @@
-using NoosiumX.Resources.Log;
-using NoosiumX.WebDriver.Mock;
-
-namespace NoosiumX.TestSuites.Auth
+namespace NoosiumX.TestSuites
 {
-    using NoosiumX.WebDriver.TestCases.Desktop.Auth;
+    using Resources.Log;
+    using WebDriver.Mock;
+    using WebDriver.TestCases.Desktop.Auth;
     using NUnit.Framework;
     
     [TestFixture,

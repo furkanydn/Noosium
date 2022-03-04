@@ -1,8 +1,8 @@
-namespace NoosiumX.TestSuites.Missions.Community
+namespace NoosiumX.TestSuites
 {
-    using NUnit.Framework;
     using WebDriver.Mock;
-    using NoosiumX.WebDriver.TestCases.Desktop.Missions.Community;
+    using WebDriver.TestCases.Desktop.Missions.Community;
+    using NUnit.Framework;
     
     [TestFixture,
      Order(1),
